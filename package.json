@@ -1,5 +1,5 @@
 {
-  "name": "@didstopia/homebridge-plugin-ilo",
+  "name": "homebridge-plugin-ilo",
   "version": "0.0.1",
   "description": "Homebridge plugin for controlling HPE servers through iLO.",
   "repository": "github:Didstopia/homebridge-plugin-ilo",

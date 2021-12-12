@@ -7,7 +7,7 @@ Homebridge plugin for controlling HPE servers through iLO.
 # Installation
 
 ```sh
-npm install @didstopia/homebridge-plugin-ilo
+npm install homebridge-plugin-ilo
 ```
 
 # Usage
