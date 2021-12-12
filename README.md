@@ -1,6 +1,6 @@
 # Homebridge HPE iLO plugin for HomeKit
 
-**NOTE:** _This is a fork of [homebridge-plugin-ilo](https://github.com/pawelwiecaszek/homebridge-plugin-ilo) by [pawelwiecaszek](https://github.com/pawelwiecaszek).
+**NOTE:** _This is a fork of [homebridge-plugin-ilo](https://github.com/pawelwiecaszek/homebridge-plugin-ilo) by [pawelwiecaszek](https://github.com/pawelwiecaszek)._
 
 Homebridge plugin for controlling HPE servers through iLO.
 
