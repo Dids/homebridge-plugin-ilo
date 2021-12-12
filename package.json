@@ -1,14 +1,19 @@
 {
-  "name": "homebridge-plugin-ilo",
+  "name": "@didstopia/homebridge-plugin-ilo",
   "version": "0.0.1",
-  "description": "",
+  "description": "Homebridge plugin for controlling HPE servers through iLO.",
   "main": "index.js",
   "keywords": [
-    "homebridge-plugin"
+    "homebridge-plugin",
+    "iLO",
+    "HPE"
   ],
   "engines": {
     "homebridge": ">=0.2.5"
   },
-  "author": "pawelwiecaszek",
+  "author": "Didstopia <support@didstopia.com>",
+  "contributors": [
+    "pawelwiecaszek"
+  ],
   "license": "MIT"
 }

@@ -1,10 +1,18 @@
-# Homekit iLO Switch
+# Homebridge HPE iLO plugin for HomeKit
 
-This is simple homebridge plugin (switch). It allows to turn on and turn off servers through iLO.
+**NOTE:** _This is a fork of [homebridge-plugin-ilo](https://github.com/pawelwiecaszek/homebridge-plugin-ilo) by [pawelwiecaszek](https://github.com/pawelwiecaszek).
 
-## Configuration
+Homebridge plugin for controlling HPE servers through iLO.
 
+# Installation
+
+```sh
+npm install @didstopia/homebridge-plugin-ilo
 ```
+
+# Usage
+
+```json
 {
   "accessory": "IloSwitch",
   "name": "IloSwitch",

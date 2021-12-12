@@ -1,7 +1,7 @@
 'use strict'
 
 let Service, Characteristic
-const https = require('https');
+const https = require('https')
 
 module.exports = (homebridge) => {
   /* this is the starting point for the plugin where we register the accessory */
@@ -11,7 +11,7 @@ module.exports = (homebridge) => {
 }
 
 class SwitchAccessory {
-  constructor (log, config) {
+  constructor(log, config) {
     /*
      * The constructor function is called when the plugin is registered.
      * log is a function that can be used to log output to the homebridge console
@@ -24,7 +24,7 @@ class SwitchAccessory {
 
     this.user = config['user']
     this.password = config['password']
-    this.server= config['server']
+    this.server = config['server']
 
     /*
      * A HomeKit accessory can have many "services". This will create our base service,
@@ -35,9 +35,9 @@ class SwitchAccessory {
     this.service = new Service.Switch(this.config.name)
   }
 
-  getStatus () {
-    var AUTH   = 'Basic ' + Buffer.from(this.user + ':' + this.password).toString('base64')
-    var HEADER = {'Host': this.server, 'Authorization': AUTH}
+  getStatus() {
+    var AUTH = 'Basic ' + Buffer.from(this.user + ':' + this.password).toString('base64')
+    var HEADER = { 'Host': this.server, 'Authorization': AUTH }
     return new Promise(resolve => {
       const options = {
         hostname: this.server,
@@ -51,133 +51,131 @@ class SwitchAccessory {
         }
       }
 
-      const req = https.request(options, function(res) {
-        res.setEncoding('utf8');
+      const req = https.request(options, function (res) {
+        res.setEncoding('utf8')
         res.on('data', function (chunk) {
           //console.log(JSON.parse(chunk).Status.State)
-          resolve(JSON.parse(chunk).Status.State);
-        });
+          resolve(JSON.parse(chunk).Status.State)
+        })
 
-      });
+      })
 
       req.on('error', (error) => {
         console.error(error)
       })
-      req.end();
-    });
+      req.end()
+    })
   }
 
-  TurnOn () {
-    var AUTH   = 'Basic ' + Buffer.from(this.user + ':' + this.password).toString('base64')
-    var HEADER = {'Host': this.server, 'Authorization': AUTH}
+  TurnOn() {
+    var AUTH = 'Basic ' + Buffer.from(this.user + ':' + this.password).toString('base64')
+    var HEADER = { 'Host': this.server, 'Authorization': AUTH }
     return new Promise(resolve => {
 
       this.getStatus()
-      .then(status => {
+        .then(status => {
 
-        if (status == "Disabled")
-        {
-          const data = JSON.stringify({
-            Action: 'Reset',
-            ResetType: 'PushPowerButton'
-          })
+          if (status == "Disabled") {
+            const data = JSON.stringify({
+              Action: 'Reset',
+              ResetType: 'PushPowerButton'
+            })
 
-          const options = {
-            hostname: this.server,
-            port: 443,
-            path: '/redfish/v1/Systems/1/',
-            method: 'POST',
-            rejectUnauthorized: false,
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': AUTH
+            const options = {
+              hostname: this.server,
+              port: 443,
+              path: '/redfish/v1/Systems/1/',
+              method: 'POST',
+              rejectUnauthorized: false,
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': AUTH
+              }
             }
+
+            const req = https.request(options, function (res) {
+              res.setEncoding('utf8')
+              res.on('data', function (chunk) {
+                //console.log(JSON.parse(chunk))
+                resolve(JSON.parse(chunk))
+              })
+
+            })
+
+            req.on('error', (error) => {
+              console.error(error)
+            })
+
+            req.write(data)
+            req.end()
+
+          } else {
+            console.log("Server already started!")
           }
-
-          const req = https.request(options, function(res) {
-            res.setEncoding('utf8');
-            res.on('data', function (chunk) {
-              //console.log(JSON.parse(chunk))
-              resolve(JSON.parse(chunk));
-            });
-
-          });
-
-          req.on('error', (error) => {
-            console.error(error)
-          })
-
-          req.write(data)
-          req.end();
-
-        } else {
-          console.log("Server already started!")
-        }
-      });
-    });
+        })
+    })
   }
 
-  TurnOff () {
-    var AUTH   = 'Basic ' + Buffer.from(this.user + ':' + this.password).toString('base64')
-    var HEADER = {'Host': this.server, 'Authorization': AUTH}
+  TurnOff() {
+    var AUTH = 'Basic ' + Buffer.from(this.user + ':' + this.password).toString('base64')
+    var HEADER = { 'Host': this.server, 'Authorization': AUTH }
     return new Promise(resolve => {
 
       this.getStatus()
-      .then(status => {
+        .then(status => {
 
-        if (status != "Disabled")
-        {
-          const data = JSON.stringify({
-            Action: 'Reset',
-            ResetType: 'PushPowerButton'
-          })
+          if (status != "Disabled") {
+            const data = JSON.stringify({
+              Action: 'Reset',
+              ResetType: 'PushPowerButton'
+            })
 
-          const options = {
-            hostname: this.server,
-            port: 443,
-            path: '/redfish/v1/Systems/1/',
-            method: 'POST',
-            rejectUnauthorized: false,
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': AUTH
+            const options = {
+              hostname: this.server,
+              port: 443,
+              path: '/redfish/v1/Systems/1/',
+              method: 'POST',
+              rejectUnauthorized: false,
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': AUTH
+              }
             }
+
+            const req = https.request(options, function (res) {
+              res.setEncoding('utf8')
+              res.on('data', function (chunk) {
+                //console.log(JSON.parse(chunk))
+                resolve(JSON.parse(chunk))
+              })
+
+            })
+
+            req.on('error', (error) => {
+              console.error(error)
+            })
+
+            req.write(data)
+            req.end()
+
+          } else {
+            console.log("Server already powered off!")
           }
-
-          const req = https.request(options, function(res) {
-            res.setEncoding('utf8');
-            res.on('data', function (chunk) {
-              //console.log(JSON.parse(chunk))
-              resolve(JSON.parse(chunk));
-            });
-
-          });
-
-          req.on('error', (error) => {
-            console.error(error)
-          })
-
-          req.write(data)
-          req.end();
-
-        } else {
-          console.log("Server already powered off!")
-        }
-      });
-    });
+        })
+    })
   }
 
-  getServices () {
+  getServices() {
     /*
      * The getServices function is called by Homebridge and should return an array of Services this accessory is exposing.
      * It is also where we bootstrap the plugin to tell Homebridge which function to use for which action.
      */
 
-     /* Create a new information service. This just tells HomeKit about our accessory. */
+    /* Create a new information service. This just tells HomeKit about our accessory. */
     const informationService = new Service.AccessoryInformation()
-        .setCharacteristic(Characteristic.Manufacturer, 'HPE')
-        .setCharacteristic(Characteristic.Model, 'iLOSwitch')
-        .setCharacteristic(Characteristic.SerialNumber, '123-4820-333')
+      .setCharacteristic(Characteristic.Manufacturer, 'HPE')
+      .setCharacteristic(Characteristic.Model, 'iLOSwitch')
+      .setCharacteristic(Characteristic.SerialNumber, '123-4820-333')
 
     /*
      * For each of the service characteristics we need to register setters and getter functions
@@ -192,7 +190,7 @@ class SwitchAccessory {
     return [informationService, this.service]
   }
 
-  setOnCharacteristicHandler (value, callback) {
+  setOnCharacteristicHandler(value, callback) {
     /* this is called when HomeKit wants to update the value of the characteristic as defined in our getServices() function */
 
     /*
@@ -200,12 +198,11 @@ class SwitchAccessory {
      * This is just an example so we will just assign the value to a variable which we can retrieve in our get handler
      */
     this.isOn = value
-    if (this.isOn == true )
-    {
-      this.TurnOn();
+    if (this.isOn == true) {
+      this.TurnOn()
     }
     else {
-      this.TurnOff();
+      this.TurnOff()
     }
 
     /* Log to the console the value whenever this function is called */
@@ -218,7 +215,7 @@ class SwitchAccessory {
     callback(null)
   }
 
-  getOnCharacteristicHandler (callback) {
+  getOnCharacteristicHandler(callback) {
     /*
      * this is called when HomeKit wants to retrieve the current state of the characteristic as defined in our getServices() function
      * it's called each time you open the Home app or when you open control center
@@ -228,15 +225,15 @@ class SwitchAccessory {
     this.log(`calling getOnCharacteristicHandler`, this.isOn)
 
     this.getStatus()
-    .then(status => {
-      this.log(`Ilo Status is: `, status)
-      if (status == "Disabled") {
-        this.isOn = false;
-      }
-      else {
-        this.isOn = false;
-      }
-    });
+      .then(status => {
+        this.log(`Ilo Status is: `, status)
+        if (status == "Disabled") {
+          this.isOn = false
+        }
+        else {
+          this.isOn = false
+        }
+      })
 
     /*
      * The callback function should be called to return the value
@@ -244,7 +241,7 @@ class SwitchAccessory {
      * The second argument in the function should be the current value of the characteristic
      * This is just an example so we will return the value from `this.isOn` which is where we stored the value in the set handler
      */
-     callback(null, this.isOn)
+    callback(null, this.isOn)
   }
 
 }
