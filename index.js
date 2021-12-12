@@ -47,13 +47,13 @@ class SwitchAccessory {
         rejectUnauthorized: false,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': AUTH
-        }
+          'Authorization': AUTH,
+        },
       }
 
-      const req = https.request(options, function (res) {
+      const req = https.request(options, (res) => {
         res.setEncoding('utf8')
-        res.on('data', function (chunk) {
+        res.on('data', (chunk) => {
           //console.log(JSON.parse(chunk).Status.State)
           resolve(JSON.parse(chunk).Status.State)
         })
@@ -75,10 +75,10 @@ class SwitchAccessory {
       this.getStatus()
         .then(status => {
 
-          if (status == "Disabled") {
+          if (status == 'Disabled') {
             const data = JSON.stringify({
               Action: 'Reset',
-              ResetType: 'PushPowerButton'
+              ResetType: 'PushPowerButton',
             })
 
             const options = {
@@ -89,13 +89,13 @@ class SwitchAccessory {
               rejectUnauthorized: false,
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': AUTH
-              }
+                'Authorization': AUTH,
+              },
             }
 
-            const req = https.request(options, function (res) {
+            const req = https.request(options, (res) => {
               res.setEncoding('utf8')
-              res.on('data', function (chunk) {
+              res.on('data', (chunk) => {
                 //console.log(JSON.parse(chunk))
                 resolve(JSON.parse(chunk))
               })
@@ -110,7 +110,7 @@ class SwitchAccessory {
             req.end()
 
           } else {
-            console.log("Server already started!")
+            console.log('Server already started!')
           }
         })
     })
@@ -124,10 +124,10 @@ class SwitchAccessory {
       this.getStatus()
         .then(status => {
 
-          if (status != "Disabled") {
+          if (status != 'Disabled') {
             const data = JSON.stringify({
               Action: 'Reset',
-              ResetType: 'PushPowerButton'
+              ResetType: 'PushPowerButton',
             })
 
             const options = {
@@ -138,13 +138,13 @@ class SwitchAccessory {
               rejectUnauthorized: false,
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': AUTH
-              }
+                'Authorization': AUTH,
+              },
             }
 
-            const req = https.request(options, function (res) {
+            const req = https.request(options, (res) => {
               res.setEncoding('utf8')
-              res.on('data', function (chunk) {
+              res.on('data', (chunk) => {
                 //console.log(JSON.parse(chunk))
                 resolve(JSON.parse(chunk))
               })
@@ -159,7 +159,7 @@ class SwitchAccessory {
             req.end()
 
           } else {
-            console.log("Server already powered off!")
+            console.log('Server already powered off!')
           }
         })
     })
@@ -200,13 +200,12 @@ class SwitchAccessory {
     this.isOn = value
     if (this.isOn == true) {
       this.TurnOn()
-    }
-    else {
+    } else {
       this.TurnOff()
     }
 
     /* Log to the console the value whenever this function is called */
-    this.log(`calling setOnCharacteristicHandler`, value)
+    this.log('calling setOnCharacteristicHandler', value)
 
     /*
      * The callback function should be called to return the value
@@ -222,15 +221,14 @@ class SwitchAccessory {
      */
 
     /* Log to the console the value whenever this function is called */
-    this.log(`calling getOnCharacteristicHandler`, this.isOn)
+    this.log('calling getOnCharacteristicHandler', this.isOn)
 
     this.getStatus()
       .then(status => {
-        this.log(`Ilo Status is: `, status)
-        if (status == "Disabled") {
+        this.log('Ilo Status is: ', status)
+        if (status == 'Disabled') {
           this.isOn = false
-        }
-        else {
+        } else {
           this.isOn = false
         }
       })

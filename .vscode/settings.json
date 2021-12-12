@@ -1,0 +1,21 @@
+{
+  "files.eol": "\n",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    // "javascript",
+    // "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  // "editor.formatOnSave": true,
+  // "editor.formatOnSaveMode": "file",
+  // "editor.formatOnType": true,
+  "editor.rulers": [
+    140
+  ],
+  "eslint.enable": true,
+  "eslint.codeActionsOnSave.mode": "all",
+  "eslint.format.enable": true
+}

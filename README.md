@@ -14,11 +14,11 @@ npm install homebridge-plugin-ilo
 
 ```json
 {
-  "accessory": "IloSwitch",
-  "name": "IloSwitch",
-  "user": "YourUsernameGoesHere",
-  "password": "YourPassGoesHere",
-  "server": "Your IP/FQDN Goes Here"
+  "accessory": "iLO",
+  "name": "My Server",
+  "username": "<username>",
+  "password": "<password>",
+  "host": "<server_ip_or_host>"
 }
 ```
 
